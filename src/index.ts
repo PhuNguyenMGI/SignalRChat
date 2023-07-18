@@ -39,6 +39,6 @@ tbMessage.addEventListener("keyup", (e: KeyboardEvent) => {
 btnSend.addEventListener("click", send);
 
 function send() {
-    connection.send("sendMessage", username, tbMessage.value)
+    connection.send("SendMessage", username.toString(), tbMessage.value)
         .then(() => (tbMessage.value = ""));
 }

@@ -5,6 +5,7 @@ namespace SignalRChat.Hubs
     public interface IChatClient
     {
         Task ReceiveMessage(string user, string message);
+        Task Send(string message);
     }
     public class ChatHub : Hub<IChatClient>
     {
@@ -16,15 +17,25 @@ namespace SignalRChat.Hubs
             => await Clients.Caller.ReceiveMessage(user, message);
         public async Task SendMessageToGroup(string user, string message)
             => await Clients.Group("SignalR Users").ReceiveMessage(user, message);
-        public override async Task OnConnectedAsync()
+        public async Task AddToGroup(string groupName)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
-            await base.OnConnectedAsync();
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+            await Clients.Group(groupName).Send($"{Context.ConnectionId} has joined the group {groupName}.");
         }
-        public override async Task OnDisconnectedAsync(Exception? exception)
+        public async Task RemoveFromGroup(string groupName)
         {
-            await base.OnDisconnectedAsync(exception);
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
+            await Clients.Group(groupName).Send($"{Context.ConnectionId} has left the group {groupName}.");
         }
+        //public override async Task OnConnectedAsync()
+        //{
+        //    await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
+        //    await base.OnConnectedAsync();
+        //}
+        //public override async Task OnDisconnectedAsync(Exception? exception)
+        //{
+        //    await base.OnDisconnectedAsync(exception);
+        //}
 
     }
 }

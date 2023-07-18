@@ -5,11 +5,25 @@
     <title>ASP.NET Core SignalR with TypeScript and Webpack</title>
 </head>
 <body>
-    <div id="divMessages" class="messages"></div>
-    <div class="input-zone">
-        <label id="lblMessage" for="tbMessage">Message:</label>
-        <input id="tbMessage" class="input-zone-input" type="text" />
-        <button id="btnSend">Send</button>
+    <div class="main-container">
+        <div class="sidebar">
+            <h2>Groups Chat</h2>
+            <ul class="group-list">
+                <li class="group-item">Group 1</li>
+                <li class="group-item">Group 2</li>
+                <li class="group-item">Group 3</li>
+                <li class="group-item">Group 4</li>
+            </ul>
+        </div>
+
+        <div class="message-field">
+            <div id="divMessages" class="messages"></div>
+            <div class="input-zone">
+                <label id="lblMessage" for="tbMessage">Message:</label>
+                <input id="tbMessage" class="input-zone-input" type="text" />
+                <button id="btnSend">Send</button>
+            </div>
+        </div>
     </div>
 </body>
 </html>

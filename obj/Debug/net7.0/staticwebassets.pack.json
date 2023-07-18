@@ -5,16 +5,16 @@
       "PackagePath": "staticwebassets\\SignalRChat.bundle.scp.css"
     },
     {
-      "Id": "D:\\repos\\SignalRChat\\wwwroot\\css\\main.917dfa3c1b620d0e2cd7.css",
-      "PackagePath": "staticwebassets\\css\\main.917dfa3c1b620d0e2cd7.css"
+      "Id": "D:\\repos\\SignalRChat\\wwwroot\\css\\main.a0b3ee2840bbfffeab27.css",
+      "PackagePath": "staticwebassets\\css\\main.a0b3ee2840bbfffeab27.css"
     },
     {
       "Id": "D:\\repos\\SignalRChat\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
     },
     {
-      "Id": "D:\\repos\\SignalRChat\\wwwroot\\main.917dfa3c1b620d0e2cd7.js",
-      "PackagePath": "staticwebassets\\main.917dfa3c1b620d0e2cd7.js"
+      "Id": "D:\\repos\\SignalRChat\\wwwroot\\main.a0b3ee2840bbfffeab27.js",
+      "PackagePath": "staticwebassets\\main.a0b3ee2840bbfffeab27.js"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.SignalRChat.Microsoft.AspNetCore.StaticWebAssets.props",
