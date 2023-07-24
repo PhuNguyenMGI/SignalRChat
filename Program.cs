@@ -6,6 +6,8 @@ using Swashbuckle.AspNetCore.Swagger;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddCors(o => o.AddPolicy("Policy", builder => {
@@ -19,6 +21,7 @@ builder.Services.AddSignalR();
 var app = builder.Build();
 
 app.UseDefaultFiles();
+app.UseCors("Policy");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -34,16 +37,16 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseSpaStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapRazorPages();
 app.MapHub<ChatHub>("/hub");
 
 var users = app.MapGroup("/api/users");
-var groups = app.MapGroup("/api/groups");
+//var groups = app.MapGroup("/api/groups");
 
 app.MapGet("/", UsersServices.GetAllUsers);
 app.MapGet("/user/{groupId}", UsersServices.GetUsersByGroup);
@@ -52,10 +55,10 @@ app.MapPost("/", UsersServices.InsertUser);
 app.MapPut("/{id}", UsersServices.UpdateUser);
 app.MapDelete("/{id}", UsersServices.DeleteUser);
 
-app.MapGet("/", GroupsServices.GetAllGroups);
-app.MapGet("/{id}", GroupsServices.GetGroupById);
-app.MapPost("/", GroupsServices.InsertGroup);
-app.MapPut("/{id}", GroupsServices.UpdateGroup);
-app.MapDelete("/{id}", GroupsServices.DeleteGroup);
+// app.MapGet("/", GroupsServices.GetAllGroups);
+// app.MapGet("/{id}", GroupsServices.GetGroupById);
+// app.MapPost("/", GroupsServices.InsertGroup);
+// app.MapPut("/{id}", GroupsServices.UpdateGroup);
+// app.MapDelete("/{id}", GroupsServices.DeleteGroup);
 
 app.Run();

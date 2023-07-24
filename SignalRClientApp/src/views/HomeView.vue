@@ -1,47 +1,33 @@
 <script setup lang="ts">
-import * as signalR from "@microsoft/signalr";
+import { inject, onMounted } from 'vue';
 
-// const divMessages: HTMLDivElement = document.querySelector("#divMessages");
-// const tbMessage: HTMLInputElement = document.querySelector("#tbMessage");
-// const btnSend: HTMLButtonElement = document.querySelector("#btnSend");
-const username = new Date().getTime();
+const signalRConnection: any = inject('signalRConnection');
+  // export default {
+  //   mounted() {
+  //     const connection = this.$signalRConnection;
+  //     connection.on('ReceiveMessage', (user, message) => {
+  //       console.log(`Received message from ${user}: ${message}`);
+  //     });
+  //   },
+  //   methods: {
+  //     sendMessage() {
+  //       const connection = this.$signalRConnection;
+  //       connection.invoke('SendMessage', 'John', 'Hello from Vue.js');
+  //     },
+  //   },
+  // };
 
-const connection = new signalR.HubConnectionBuilder()
-    .withUrl("/hub")
-    .build();
-
-connection.on("ReceiveMessage", (username: string, message: string) => {
-    // const m = document.createElement("div");
-
-    // m.innerHTML = `<div class="message-author">${username}</div><div>${message}</div>`;
-
-    // divMessages.appendChild(m);
-    // divMessages.scrollTop = divMessages.scrollHeight;
-});
-
-//connection.on("GetMessage", async () => {
-//    let promise = new Promise((resolve, reject) => {
-//        setTimeout(() => {
-//            resolve("message");
-//        }, 100);
-//    });
-//    return promise;
-//});
-
-connection.start().catch((err) => document.write(err));
-
-// tbMessage.addEventListener("keyup", (e: KeyboardEvent) => {
-//     if (e.key === "Enter") {
-//         send();
-//     }
-// });
-
-// btnSend.addEventListener("click", send);
-
-function send() {
-    connection.send("SendMessage", username.toString(), 'Sample message')
-        // .then(() => (tbMessage.value = ""));
+const sendMessage = () => {
+  const connection = signalRConnection;
+  connection.invoke('SendMessage', 'Phu Nguyen', 'Hello from Vue.js');
 }
+
+onMounted(() => {
+  const connection = signalRConnection;
+  connection.on('ReceiveMessage', (user: string, message: string) => {
+    console.log(`Received message from ${user}: ${message}`);
+  })
+})
 </script>
 
 <template>
@@ -63,7 +49,7 @@ function send() {
             <div class="input-zone">
                 <label id="lblMessage" for="tbMessage">Message:</label>
                 <input id="tbMessage" class="input-zone-input" type="text" />
-                <button id="btnSend">Send</button>
+                <button :click="sendMessage" id="btnSend">Send</button>
             </div>
         </div>
       </div>
