@@ -2,6 +2,8 @@
 import { inject, onMounted } from 'vue';
 
 const signalRConnection: any = inject('signalRConnection');
+const connection = signalRConnection;
+
   // export default {
   //   mounted() {
   //     const connection = this.$signalRConnection;
@@ -18,12 +20,10 @@ const signalRConnection: any = inject('signalRConnection');
   // };
 
 const sendMessage = () => {
-  const connection = signalRConnection;
   connection.invoke('SendMessage', 'Phu Nguyen', 'Hello from Vue.js');
 }
 
 onMounted(() => {
-  const connection = signalRConnection;
   connection.on('ReceiveMessage', (user: string, message: string) => {
     console.log(`Received message from ${user}: ${message}`);
   })
@@ -49,7 +49,7 @@ onMounted(() => {
             <div class="input-zone">
                 <label id="lblMessage" for="tbMessage">Message:</label>
                 <input id="tbMessage" class="input-zone-input" type="text" />
-                <button :click="sendMessage" id="btnSend">Send</button>
+                <button @click="sendMessage" id="btnSend">Send</button>
             </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ import router from './router'
 axios.defaults.baseURL = 'https://localhost:5001' // Replace with your ASP.NET Core API base URL
 
 const connection = new signalR.HubConnectionBuilder()
-    .withUrl('https://localhost:5001/hub') // Replace with your SignalR hub URL
+    .withUrl('https://localhost:5001/hubs/general') // Replace with your SignalR hub URL
     .build()
 
 // Connect to the SignalR hub

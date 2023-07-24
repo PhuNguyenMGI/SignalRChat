@@ -11,9 +11,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddCors(o => o.AddPolicy("Policy", builder => {
-    builder.AllowAnyOrigin()
+    builder.WithOrigins("http://localhost:3000")
       .AllowAnyMethod()
-      .AllowAnyHeader();
+      .SetIsOriginAllowed((host) => true)
+      .AllowAnyHeader()
+      .AllowCredentials();
 }));
 builder.Services.AddSpaStaticFiles(options => options.RootPath = "SignalRClientApp/dist");
 builder.Services.AddSignalR();
@@ -43,7 +45,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapHub<ChatHub>("/hub");
+app.MapHub<ChatHub>("/hubs/general");
 
 var users = app.MapGroup("/api/users");
 //var groups = app.MapGroup("/api/groups");
