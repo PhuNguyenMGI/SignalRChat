@@ -3,9 +3,9 @@
 [EnableCors("Policy")]
 public class UsersServices
 {
-    public static async Task<IResult> GetAllUsers(ApplicationDbContext db)
+    public static async Task<IResult> LoginRequest(string username, string password, ApplicationDbContext db)
     {
-        return TypedResults.Ok(await db.Users.ToListAsync());
+        return TypedResults.Ok(await db.Users.Where(t => t.name == username && t.password == password).ToListAsync());
     }
     public static async Task<IResult> GetUsersByGroup(int group, ApplicationDbContext db)
     {

@@ -50,10 +50,10 @@ app.MapHub<ChatHub>("/hubs/general");
 var users = app.MapGroup("/api/users");
 //var groups = app.MapGroup("/api/groups");
 
-app.MapGet("/", UsersServices.GetAllUsers);
+app.MapGet("/login", UsersServices.LoginRequest);
 app.MapGet("/user/{groupId}", UsersServices.GetUsersByGroup);
 app.MapGet("/{id}", UsersServices.GetUserById);
-app.MapPost("/", UsersServices.InsertUser);
+app.MapPost("/loginData", UsersServices.InsertUser);
 app.MapPut("/{id}", UsersServices.UpdateUser);
 app.MapDelete("/{id}", UsersServices.DeleteUser);
 

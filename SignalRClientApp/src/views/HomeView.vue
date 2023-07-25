@@ -1,38 +1,31 @@
 <script setup lang="ts">
-import { inject, onMounted } from 'vue';
+import { inject, onMounted, ref } from 'vue';
 
 const signalRConnection: any = inject('signalRConnection');
 const connection = signalRConnection;
-
-  // export default {
-  //   mounted() {
-  //     const connection = this.$signalRConnection;
-  //     connection.on('ReceiveMessage', (user, message) => {
-  //       console.log(`Received message from ${user}: ${message}`);
-  //     });
-  //   },
-  //   methods: {
-  //     sendMessage() {
-  //       const connection = this.$signalRConnection;
-  //       connection.invoke('SendMessage', 'John', 'Hello from Vue.js');
-  //     },
-  //   },
-  // };
+const inputMessage = ref('');
 
 const sendMessage = () => {
-  connection.invoke('SendMessage', 'Phu Nguyen', 'Hello from Vue.js');
+  connection.invoke('SendMessage', 'Phu Nguyen', inputMessage.value);
+  inputMessage.value = '';
 }
 
 onMounted(() => {
+  const divMessages: HTMLDivElement = document.querySelector("#divMessages");
   connection.on('ReceiveMessage', (user: string, message: string) => {
-    console.log(`Received message from ${user}: ${message}`);
+    const m = document.createElement("div");
+
+    m.innerHTML = `<div class="message-author">${user}</div><div>${message}</div>`;
+
+    divMessages.appendChild(m);
+    divMessages.scrollTop = divMessages.scrollHeight;
   })
 })
 </script>
 
 <template>
   <main>
-    <div class="main-chat w-full bg-slate-700">
+    <div class="main-chat w-full">
       <div class="main-container">
         <div class="sidebar">
             <h2>Groups Chat</h2>
@@ -48,7 +41,7 @@ onMounted(() => {
             <div id="divMessages" class="messages"></div>
             <div class="input-zone">
                 <label id="lblMessage" for="tbMessage">Message:</label>
-                <input id="tbMessage" class="input-zone-input" type="text" />
+                <input id="tbMessage" class="input-zone-input" type="text" v-model="inputMessage" />
                 <button @click="sendMessage" id="btnSend">Send</button>
             </div>
         </div>
